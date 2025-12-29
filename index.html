@@ -2660,8 +2660,8 @@ background-size: auto;
 
 /* 图片容器：占据屏幕中上方 70% 空间 */
 .bqv-modal-content {
-    width: 90%; height: 80vh; /* 屏幕高度的 70% */
-    margin-top: vh; /* 顶部留白 */
+    width: 90%; height: 84vh; /* 屏幕高度的 70% */
+    margin-top: 2vh; /* 顶部留白 */
     display: flex; align-items: center; justify-content: center;
 }
 .bqv-modal-content img {
@@ -3115,15 +3115,21 @@ background-size: auto;
 
 /* 1. 最底层背景 (红色方框) */
 .home-bg-layer {
-    position: absolute;
-    top: 0; 
-    left: 0;
-    width: 100%; 
-    height: 100%;
+position: absolute;
+    /* 定位到左下角，并留出 10px 的边距 */
+    bottom: 10px; 
+    left: 10px;
+    
+    /* 设定您要求的尺寸 */
+    width: 10%; 
+    height: 10%;
+    
+    /* 保持图片内容在方框内填充，不因比例微差而变形 */
     background-size: cover;
     background-position: center;
+    
+    /* 保持层级在最底层 */
     z-index: 1;
-    /* 增加一个针对移动端的锁定，防止滚动时位移 */
     background-attachment: scroll;
 }
 
@@ -3476,7 +3482,7 @@ background-size: auto;
 /* 21:9 头图 */
 .ov-header-banner {
     width: 100%;
-    aspect-ratio: 21 / 9;
+    aspect-ratio: 2.828 / 1;
     object-fit: cover;
     display: block;
 }
@@ -3510,6 +3516,7 @@ background-size: auto;
     z-index: 1;
     transition: transform 1.0s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s;
     opacity: 0;
+    border: none !important;
 }
 /* 彻底消除图片底部间隙 */
 .battle-img-box img, 
@@ -3520,6 +3527,7 @@ background-size: auto;
     object-fit: cover;
     margin: 0;
     padding: 0;
+    border: none !important;
 }
 
     /* 2. 修改划入前位置：实现“侧边露出 24%”的效果 */
@@ -3591,111 +3599,107 @@ background-size: auto;
     }
 }
 
-/* --- 章節 2：裝備 (修正版) --- */
+/* --- 装备页重构：基于你提供基础的增强版 --- */
 .equip-container { 
-    width: 90%; 
+    width: 100%; 
     margin: 0 auto; 
     display: flex; 
     flex-direction: column; 
-    gap: 40px; 
+    /* 【大间距】单元与单元（图片与图片）之间 */
+    gap: 100px; 
+    align-items: center;
 }
 
-.equip-row { 
+/* --- 装备页：极简高级感重构 --- */
+.equip-unit {
     display: flex; 
-    gap: 30px; 
-    /* 【關鍵 1】垂直居中對齊 */
-    align-items: center; 
-    width: 100%; 
+    flex-direction: column; 
+    align-items: center;
+    gap: 20px; width: 100%;
 }
 
-/* 1. 調整比例：圖片精確佔據 75% */
-.equip-img {
-    /* 【關鍵 2】不要用 flex-basis，直接用寬度 calc 扣除間距比例 */
-    width: calc(75% - 15px) !important; 
-    flex: none !important; /* 禁用彈性縮放，強制鎖定 */
+/* 1. 图片：黑边 + 阴影 + 比例 */
+.equip-img, .equip-row-full {
+    width: 70% !important; 
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 4px;
-    border: 1px solid #555;
+    border: 2px solid #000 !important; /* 强制黑边 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important; /* 强制阴影 */
     display: block;
 }
 
-/* 2. 調整文字欄：精確佔據 25% */
+/* 2. 玻璃框：在你提供的基础上增加更透亮、外发光 */
 .equip-glass-card {
-    width: calc(25% - 15px) !important;
-    flex: none !important; /* 強制鎖定寬度 */
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 50% !important;
+    background: rgb(54, 54, 54) !important; 
+    backdrop-filter: blur(15px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.699), inset 0 0 10px rgba(255, 255, 255, 0.05) !important;
     border-radius: 8px;
-    
-    display: flex;
-    flex-direction: column;
-    
-    /* 【關鍵 3】高度自適應內容，但限制最大高度為圖片的一半 */
     height: auto; 
-    max-height: 200px; /* 您可以根據 16:9 圖片的大約一半高度調整此值 */
-    overflow: hidden;
+    max-height: none !important;
 }
 
 .equip-card-header { 
-    background: rgba(255, 255, 255, 0.1); 
-    padding: 10px; text-align: center; 
-    font-weight: bold; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.836); 
+    padding: 12px; text-align: center; 
+    font-weight: bold; color: #1f1f1f; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .equip-card-body {
-    padding: 25px 20px !important; 
-    color: #ccc;
-    font-size: 14px;
+    padding: 25px 30px !important; 
+    color: #ffffff !important; /* 纯白文字 */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* 文字小阴影确保清晰 */
+    font-size: 15px;
     line-height: 1.8;
 }
 
-.equip-row-full { 
-    width: 100%; 
-    aspect-ratio: 16 / 9; 
-    object-fit: cover; 
-    border-radius: 4px; }
+/* --- 属性块神秘化特供 --- */
+.attr-img-box {
+    border-radius: 4px;
+    border: 1px solid var(--glow-color);
+    box-shadow: 0 0 12px var(--glow-color); /* 颜色外发光 */
+    transition: none !important;
+}
+/* 变暗滤镜：除了1阶外全部变暗 */
+.attr-darken { filter: brightness(0.15) grayscale(0.9); }
+.attr-unit-mini { transform: none !important; cursor: default; }
+
+/* 斑丘卡档案专属布局 */
+.bq-card-row {
+    display: flex; gap: 20px; margin-bottom: 25px;
+    padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.bq-card-row:last-child { border-bottom: none; }
+.bq-card-icon { width: 80px; height: 80px; flex-shrink: 0; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; border: 1px solid rgba(255,255,255,0.2); }
+.bq-card-icon img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 5px var(--card-color)); }
+.bq-card-info { flex: 1; }
+.bq-card-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; color: var(--card-color); }
+.bq-card-detail { font-size: 14px; opacity: 0.9; }
+.bq-card-detail b { color: #feff00; }
+
+/* --- 装备页：最终全屏图（脱离单元逻辑） --- */
+.equip-final-full {
+    width: 100% !important;      /* 强制 100% 宽度 */
+    max-width: none !important;  /* 取消最大宽度限制 */
+    border: none !important;     /* 彻底移除黑边 */
+    box-shadow: none !important; /* 彻底移除阴影 */
+    border-radius: 0 !important; /* 彻底移除圆角，实现直角全屏感 */
+    margin: 40px 0 0 0 !important; /* 仅保留顶部间距，确保与上方玻璃框隔开 */
+    display: block;
+    aspect-ratio: auto !important; /* 允许根据图片原比例缩放 */
+}
+/* --- 手机端适配 --- */
 @media (max-width: 768px) {
-    /* 1. 縮小圖片與文字框之間的左右間距 (從 30px 壓縮至 8px) */
-    .equip-row {
-        gap: 8px !important; 
-    }
-
-    /* 2. 重新計算寬度以適配 8px 間距 (公式：比例 - 4px) */
-    .equip-img {
-        width: calc(75% - 4px) !important;
-        border-width: 1px !important;
-    }
-
-    .equip-glass-card {
-        width: calc(25% - 4px) !important;
-        max-height: none !important; /* 為了防止文字太擠，取消最大高度限制，讓它根據內容撐開 */
-    }
-
-    /* 3. 縮小頭欄 (Header) 的高度與文字大小 */
-    .equip-card-header {
-        padding: 4px 2px !important; /* 從 10px 大幅縮減 */
-        font-size: 14px !important;   /* 標題字號縮小 */
-        border-bottom-width: 1px !important;
-    }
-
-    /* 4. 縮小文字框內邊距 (解決文字格太窄的核心) */
-    .equip-card-body {
-        /* 將原本 25px 20px 的內邊距壓縮至上下 8px 左右 6px */
-        padding: 8px 6px !important; 
-        font-size: 13px !important;   /* 25% 寬度下文字必須非常小才能排版 */
-        line-height: 1.3 !important;  /* 壓縮行間距 */
-    }
-
-    /* 5. 額外優化：調整整體容器在手機端的左右留白 */
-    .equip-container {
-        width: 96% !important; /* 讓整體稍微寬一點，爭取更多文字空間 */
-        gap: 20px !important;  /* 每一組裝備之間的上下間距縮小 */
-    }
+    .equip-container { gap: 60px; } 
+    .equip-img, .equip-row-full { width: 95% !important; }
+    .equip-glass-card { width: 90% !important; }
+    .equip-card-body { padding: 15px 20px !important; font-size: 13px; }
 }
 
-    
 /* --- 章节 3：公正 --- */
 .justice-grid {
     display: grid;
@@ -3833,10 +3837,118 @@ background-size: auto;
 }
 
 
+/* --- 属性块图鉴专用：3x5 布局与阶级颜色 --- */
+.attr-grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 15px;
+}
 
+/* 阶级背景深浅逻辑 */
+.tier-bg-1 { background: rgba(143, 143, 143, 0.719); } /* 一阶：极浅 */
+.tier-bg-2 { background: rgba(122, 122, 122, 0.904); } /* 二阶：稍深 */
+.tier-bg-3 { background: rgba(255, 255, 255, 0.13); } /* 三阶：更深 */
+.tier-bg-4 { background: rgba(95, 95, 95, 0.18); box-shadow: inset 0 0 15px rgba(212, 212, 7, 0.89); } /* 四阶：带微光 */
+.tier-bg-5 { background: rgba(255, 255, 255, 0.25); box-shadow: inset 0 0 20px rgba(0, 255, 204, 0.87); } /* 五阶：最深 */
+
+.attr-unit-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: transform 0.2s;
+}
+.attr-unit-mini:hover { transform: scale(1.1); z-index: 5; }
+
+/* --- 还原：思维导图经典样式 --- */
+.mindmap-container {
+    display: flex; flex-direction: column; gap: 20px; padding: 20px; color: #ccc;
+}
+.mm-root {
+    align-self: center; background: #fff; color: #000;
+    padding: 5px 20px; border-radius: 20px; font-weight: 900;
+}
+.mm-branches {
+    display: flex; justify-content: space-around; gap: 15px;
+}
+.mm-branch {
+    flex: 1; display: flex; flex-direction: column; gap: 10px;
+    border-top: 1px solid #555; padding-top: 10px;
+}
+.mm-title { 
+    font-weight: bold; color: #fff; margin-bottom: 5px; 
+    border-left: 3px solid #666; padding-left: 8px; 
+}
+.mm-item { 
+    font-size: 13px; line-height: 1.5; background: rgba(255,255,255,0.05); 
+    padding: 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
+}
+/* 还原明黄色高亮 */
+.mm-highlight { color: #feff00; font-weight: bold; }
+
+
+@media (max-width: 768px) {
+    .attr-grid-container { grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 5px; }
+    .attr-label-box { font-size: 10px !important; }
+    .mm-branches { flex-direction: column; }
+}
+/* --- 斑丘卡导图化布局 --- */
+.bq-mm-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.bq-mm-row:last-child { border-bottom: none; }
+
+/* 左侧卡头：固定宽度 */
+.bq-mm-header {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.bq-mm-header img {
+    width: 65px;
+    height: 65px;
+    filter: drop-shadow(0 0 8px var(--card-color));
+}
+.bq-mm-tag {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 0;
+    border-radius: 4px;
+    color: var(--text-color, #fff);
+    background: var(--card-color);
+}
+
+/* 右侧分支系统 */
+.bq-mm-content {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+}
+
+/* 覆盖之前的 mm-branch 确保三列等宽 */
+.bq-mm-content .mm-branch {
+    flex: 1;
+    border-top: 1px solid var(--card-color); /* 顶部线条颜色跟随卡片 */
+    opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+    .bq-mm-content { flex-direction: column; } /* 平板手机变为堆叠 */
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
 
@@ -6593,12 +6705,7 @@ function jumpToCardCategory(key) {
 
 /* ================= 剧情备忘录 (Markdown + Mermaid 修复版) ================= */
 
-// 1. 初始化 Mermaid
-mermaid.initialize({ 
-    // startOnLoad: false, 
-    theme: 'base', // 使用 base 主题以便自定义颜色
-    securityLevel: 'loose', // 允许宽松的语法
-});
+
 
 // 2. 配置 Marked 拦截器 (关键修复！)
 const renderer = new marked.Renderer();
@@ -8502,7 +8609,7 @@ R2的主要战场，是熊猫带领的新[不良少年宫]与主席带领的[冷
 
 - 后续计划
 
-草莓在校园夺回战中，结施了各方势力，并渐渐对整个世界的表面战局有了些许判断。
+草莓在校园夺回战中，结识了各方势力，并渐渐对整个世界的表面战局有了些许判断。
 
 在于沐川的表面指引下，草莓将会轮转与各个社团，表面是帮忙其战斗，实际为收回，藏于各社团中的，老[炼厂]成员所携带的[纪念卡]
 
@@ -8761,29 +8868,214 @@ function renderOverview() {
     });
     html += `</div>`;
 
-    // --- 2. 裝備章節 (綠色) ---
+// --- 2. 装备章节 (ID 确保跳转可用) ---
+// --- 定义图标资源 ---
+
+
+    // --- 2. 装备章节 ---
     const equipColor = 'var(--tab-cards)';
     const equipBg = `linear-gradient(180deg, color-mix(in srgb, ${equipColor}, transparent 90%) 0%, rgba(26,26,26,0) 100%)`;
-    // 【核心修復】margin-top 加在容器上，標題欄 margin-top 設為 0，漸變就會精準對齊黑條
+    
     html += `
     <div class="ov-section" id="ov-equip" style="background: ${equipBg}; margin-top: 60px;">
-        <div class="bqc-chapter-bar" onclick="toggleOvMenu()" style="border-left-color: ${equipColor}; margin-top: 0 !important;">
+        <div class="bqc-chapter-bar" onclick="toggleOvMenu()" style="border-left-color: ${equipColor}">
             <div style="width:12px; height:12px; background:${equipColor}; border-radius:50%; box-shadow: 0 0 5px ${equipColor};"></div>
             <span class="bqc-bar-title" style="color:#fff">装备吧！ ▾</span>
         </div>
         <div class="equip-container">`;
-    
-    OverviewAssets.equip.forEach(item => {
-        if (item.type === 'row-img-left') {
-            html += `<div class="equip-row"><img src="${item.img}" class="equip-img"><div class="equip-glass-card"><div class="equip-card-header">${item.title}</div><div class="equip-card-body">${item.desc}</div></div></div>`;
-        } else if (item.type === 'row-img-right') {
-            html += `<div class="equip-row"><div class="equip-glass-card"><div class="equip-card-header">${item.title}</div><div class="equip-card-body">${item.desc}</div></div><img src="${item.img}" class="equip-img"></div>`;
-        } else {
-            html += `<img src="${item.img}" class="equip-row-full" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:4px; display:block;">`;
-        }
-    });
-    html += `</div></div>`;
 
+// 1. 定义卡牌数据
+    const RuleIcons = {
+        RW: 'images/BQcards/icons/cards_categories/UI_Card_Person_01.png',
+        JN: 'images/BQcards/icons/cards_categories/UI_Card_Skill_01.png',
+        WP: 'images/BQcards/icons/cards_categories/UI_Card_Item_01.png',
+        JK: 'images/BQcards/icons/cards_categories/UI_Card_Medal_01.png'
+    };
+
+    const CardColors = {
+        RW: '#2f5fff', JN: '#ff3422', WP: '#23c75a', JK: '#eeff00'
+    };
+
+// 內部輔助：渲染屬性塊（已修正 ??? 文字顏色為黑色）
+    const renderAttrUnit = (name, img, color, tier) => {
+        const isSecret = tier > 1; // 2階及以上神祕化
+        const displayName = isSecret ? "???" : name;
+        const darkenClass = isSecret ? "attr-darken" : "";
+        
+        // --- 核心修改：判斷文字顏色 ---
+        // 如果是神祕化的 ???，強制文字為黑色 (#000)
+        // 如果是正常顯示，則根據背景深淺判斷（雷、冰、晶、光、波等淺色背景用黑字，其餘用白字）
+        let textColor = "#fff";
+        if (isSecret) {
+            textColor = "#222"; 
+        } else if (['雷', '冰', '晶', '光', '波'].includes(name)) {
+            textColor = "#222";
+        }
+
+        return `
+            <div class="attr-unit-mini tier-bg-${tier}" style="--glow-color: ${color}">
+                <div class="attr-img-box ${darkenClass}">
+                    <img src="${img}">
+                </div>
+                <div class="attr-label-box" style="--tag-bg: ${color}; color: ${textColor}; padding: 1px 0; font-size: 12px; font-weight: bold;">
+                    ${displayName}
+                </div>
+            </div>`;
+    };
+
+    // 辅助渲染斑丘卡表格行
+    const renderBqRow = (key, title, content) => `
+        <div style="display:flex; gap:20px; margin-bottom:25px; align-items:flex-start;">
+            <div style="width:70px; flex-shrink:0; text-align:center;">
+                <img src="${RuleIcons[key]}" style="width:60px; height:60px; filter:drop-shadow(0 0 5px ${CardColors[key]});">
+                <div style="background:${CardColors[key]}; color:${key==='JK'?'#000':'#fff'}; font-size:12px; margin-top:5px; border-radius:4px;">${title}</div>
+            </div>
+            <div style="flex:1; font-size:14px; line-height:1.6;">${content}</div>
+        </div>`;
+
+    OverviewAssets.equip.forEach((item, index) => {
+        // 【核心判断】：是否为最后一张图
+        const isLastItem = (index === OverviewAssets.equip.length - 1);
+
+        if (isLastItem) {
+            // --- 最后一张图的独立逻辑：不套 equip-unit 类，直接渲染 100% 宽度的图 ---
+            html += `<img src="${item.img}" class="equip-final-full">`;
+        } else {
+        html += `<div class="equip-unit">`; // 每个 item 开启一个大单元
+        
+        const imgClass = item.type === 'row-full' ? 'equip-row-full' : 'equip-img';
+        html += `<img src="${item.img}" class="${imgClass}">`;
+
+        // 基础标题玻璃框
+        if (item.title && item.desc) {
+            html += `
+            <div class="equip-glass-card">
+                <div class="equip-card-header">${item.title}</div>
+                <div class="equip-card-body">${item.desc}</div>
+            </div>`;
+        }
+//<span class="mm-highlight">禁止暴力抢夺</span>。行内变色样式//
+        // --- 单元 2 (Index 1: 属性块) 额外挂载内容 ---
+// --- 单元 2 (Index 1: 属性块) ---
+// --- 单元 2 (Index 1: 属性块) ---
+        if (index === 1) {
+            // 玻璃框：图鉴
+            html += `
+            <div class="equip-glass-card">
+                <div class="equip-card-header">属性块种类</div>
+                <div class="equip-card-body" style="padding:15px; display:grid; grid-template-columns:repeat(5, 1fr); gap:10px;">
+                    ${renderAttrUnit('金', Attrs.METAL, '#5D9CCF', 1)}
+                    ${renderAttrUnit('木', Attrs.WOOD, '#83D44A', 1)}
+                    ${renderAttrUnit('水', Attrs.WATER, '#40B3FF', 1)}
+                    ${renderAttrUnit('火', Attrs.FIRE, '#FF4738', 1)}
+                    ${renderAttrUnit('土', Attrs.EARTH, '#E8932E', 1)}
+                    ${renderAttrUnit('风', Attrs.WIND, '#3BCBC4', 2)}
+                    ${renderAttrUnit('雷', Attrs.THUNDER, '#F3EA49', 2)}
+                    ${renderAttrUnit('冰', Attrs.ICE, '#56FCD8', 2)}
+                    ${renderAttrUnit('晶', Attrs.CRYSTAL, '#E3E3E3', 2)}
+                    ${renderAttrUnit('日', Attrs.SUN, '#F26522', 3)}
+                    ${renderAttrUnit('月', Attrs.MOON, '#805CB0', 3)}
+                    ${renderAttrUnit('尘', Attrs.DUST, '#6A4C53', 3)}
+                    ${renderAttrUnit('光', Attrs.LIGHT, '#feff00', 4)}
+                    ${renderAttrUnit('星', Attrs.STAR, '#ff32b9', 4)}
+                    ${renderAttrUnit('波', Attrs.WAVE, '#54f6d1', 5)}
+                </div>
+            </div>
+            <div class="equip-glass-card">
+                <div class="equip-card-header">属性块功能</div>
+                <div class="mindmap-container">
+                    
+                    <div class="mm-branches">
+                        <div class="mm-branch">
+                            <div class="mm-title">核心功能</div>
+                            <div class="mm-item">
+                                <span class="mm-highlight">货币：</span>可以在[友谊百货]中，通过支付不等数量的[属性块]，来[抽取]部分[斑丘卡]，或者直接[购买]部分展示出来的[斑丘卡]；
+                            </div>
+                            <div class="mm-item">
+                                <span class="mm-highlight">数值：</span>游戏中没有等级概念，玩家需要通过将[属性块]布置在[属性盘]的特定位置，来提升自身某些特定方面的数值，详见之后的[属性盘]篇章。
+                            </div>
+                        </div>
+                        <div class="mm-branch">
+                            <div class="mm-title">运用特点</div>
+                            <div class="mm-item">
+                                [属性块]可以在玩家中自由地交易、赠予等，需要双方在交换条件上达成共识，<span class="mm-highlight">不可以被暴力抢夺</span>；
+                            </div>
+                            <div class="mm-item">
+                                每天都可以按照自身所持的数量，有一定几率，获得一定比例的<span class="mm-highlight">[利息]</span>，此[利息]由[社联组]随机发放；
+                            </div>
+                            <div class="mm-item">
+                                <span class="mm-highlight">垄断机制：</span>单种数量固定。若某[社团]获得全部数量的单种块，可以选择宣布[垄断]。垄断后[社联组]将不再发放该种块，仅能从玩家处获取。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+// --- 单元 3 (Index 2: 卡盘) ---
+// --- 单元 3 (Index 2: 卡盘) 这里的逻辑紧跟在“卡盘”图片和玻璃框后面 ---
+        if (index === 2) {
+            // 定义渲染单行导图的辅助函数
+            const renderBqMindmap = (key, name, color, textColor, branches) => `
+                <div class="bq-mm-row" style="--card-color: ${color}">
+                    <div class="bq-mm-header">
+                        <img src="${RuleIcons[key]}">
+                        <div class="bq-mm-tag" style="--text-color: ${textColor}">${name}</div>
+                    </div>
+                    <div class="bq-mm-content">
+                        <div class="mm-branch">
+                            <div class="mm-title">获取方式</div>
+                            <div class="mm-item">${branches.get}</div>
+                        </div>
+                        <div class="mm-branch">
+                            <div class="mm-title">作用</div>
+                            <div class="mm-item">${branches.effect}</div>
+                        </div>
+                        <div class="mm-branch">
+                            <div class="mm-title">数量与垄断</div>
+                            <div class="mm-item">${branches.monopoly}</div>
+                        </div>
+                    </div>
+                </div>`;
+
+            html += `
+            <div class="equip-glass-card">
+                <div class="equip-card-header">斑丘卡</div>
+                <div class="equip-card-body" style="padding: 30px;">
+                    
+                    ${renderBqMindmap('RW', '人物卡', '#2f5fff', '#fff', {
+                        get: `玩家可以通过击杀对方获得、或者被对方自愿赠予，或交易获得`,
+                        effect: `获取属性块，可与持有双方[人物卡]的对象交流通信，非一次性。`,
+                        monopoly: `总数无限制。每人仅能给予一次，<span class="mm-highlight">不可垄断</span>。`
+                    })}
+
+                    ${renderBqMindmap('JN', '技能卡', '#ff3422', '#fff', {
+                        get: `在[友谊百货]中抽取，或交易获得。`,
+                        effect: `在战斗中使出强力招式。消耗后回到卡池，全部为<span class="mm-highlight">一次性</span>。`,
+                        monopoly: `累计触发100次可宣布[垄断]。垄断后本社团成员<span class="mm-highlight">免费使用</span>（无视条件）。`
+                    })}
+
+                    ${renderBqMindmap('WP', '物品卡', '#23c75a', '#fff', {
+                        get: `探索地图、完成任务、百货抽取或交易获得。`,
+                        effect: `战斗加成、恢复体力。大部分为一次性，消耗后回卡池。`,
+                        monopoly: `<span class="mm-highlight">[校徽卡]</span>单种仅1张。开年由社联组自动分配，<span class="mm-highlight">不可垄断</span>。`
+                    })}
+
+                    ${renderBqMindmap('JK', '？？？', '#eeff00', '#000', {
+                        get: `有这种卡吗？`,
+                        effect: `？？？`,
+                        monopoly: `？？？`
+                    })}
+
+                </div>
+            </div>`;
+        }
+
+        html += `</div>`; // 闭合单元
+}
+    });
+
+    
     // --- 3. 公正章節 (粉色) ---
     const justiceColor = 'var(--tab-chars)';
     const justiceBg = `linear-gradient(180deg, color-mix(in srgb, ${justiceColor}, transparent 90%) 0%, rgba(26,26,26,0) 100%)`;
@@ -8834,29 +9126,33 @@ function startOverviewObserver() {
 }
 
 
-/* === 统一启动与首屏修复 (增强版：包含 3D 倾斜与点击闪现) === */
-window.addEventListener('load', () => {
-    // 1. 按照逻辑顺序渲染所有动态内容
-    try {
-        renderOverview(); // 渲染总览
-        renderCharPage();   // 渲染人物
-        renderBqCards();    // 渲染卡牌
-        renderBqScenery();  // 渲染景色
-        renderStory();      // 渲染剧情
-    } catch (e) {
-        console.error("渲染过程中出错:", e);
-    }
+// 1. 只要 HTML 结构准备好，立即启动首页逻辑 (不再等待图片下载)
+document.addEventListener('DOMContentLoaded', () => {
+    // 立即初始化首页的核心交互
+    initHomeLogic(); 
 
-setTimeout(() => {
-    // 1. 获取元素
+    // 2. 异步渲染其他沉重的页面，不阻塞首页
+    setTimeout(() => {
+        try {
+            renderOverview(); 
+            renderCharPage();   
+            renderBqCards();    
+            renderBqScenery();  
+            renderStory();      
+        } catch (e) {
+            console.error("渲染延迟页面时出错:", e);
+        }
+    }, 50); // 给首页逻辑留出 50ms 的优先启动时间
+});
+// 将你原本在 setTimeout 里的首页逻辑封装成函数
+function initHomeLogic() {
     const homeView = document.getElementById('view-home');
     const wings = document.getElementById('home-wings');
-    const leftWing = wings.querySelector('.left');
-    const rightWing = wings.querySelector('.right');
     const mainImg = document.getElementById('home-main-img');
-    const facade = document.querySelector('.home-facade-container');
-
-    // 2. 呼吸动力学变量
+    const facade = document.querySelector('.home-facade-container');    // 2. 呼吸动力学变量
+    // 【核心修正 1】：必须在这里抓取左右翅膀元素，否则下面会报错
+    const leftWing = wings ? wings.querySelector('.left') : null;
+    const rightWing = wings ? wings.querySelector('.right') : null;
     let breathPhase = 0; // 呼吸相位 (0 ~ 2π)
 // 【删除旧的 isSpecialMode】
 // 【添加以下逻辑】
@@ -8874,7 +9170,7 @@ homeView.addEventListener('mousemove', (e) => {
             const h = homeView.offsetHeight;
             const mouseX = (e.clientX / w) - 0.5;
             const mouseY = (e.clientY / h) - 0.5;
-            wings.style.transform = `rotateX(${mouseY * -8}deg) rotateY(${mouseX * 8}deg)`;
+            wings.style.transform = `rotateX(${mouseY * -15}deg) rotateY(${mouseX * 8}deg)`;
 
             // --- B. 动力呼吸逻辑 (平滑优化版) ---
             // 1. 计算原始距离
@@ -8885,12 +9181,12 @@ homeView.addEventListener('mousemove', (e) => {
             if (moveDist > 30) moveDist = 30 + (moveDist - 30) * 0.1;
 
             // 3. 【降低灵敏度】系数从 0.008 降到 0.002，让动作变重、变沉稳
-            breathPhase += moveDist * 0.002;
+            breathPhase += moveDist * 0.001;
 
             // 4. 计算缩放 (1.0 到 1.05)
             // 这里的相位变化会因为 CSS 的 transition 变得极其丝滑
-            const scaleL = 1 + (Math.sin(breathPhase) + 1) * 0.025;
-            const scaleR = 1 + (Math.sin(breathPhase + Math.PI) + 1) * 0.025;
+            const scaleL = 1 + (Math.sin(breathPhase) + 1) * 0.05;
+            const scaleR = 1 + (Math.sin(breathPhase + Math.PI) + 1) * 0.05;
 
             leftWing.style.transform = `scale(${scaleL})`;
             rightWing.style.transform = `scale(${scaleR})`;
@@ -9017,9 +9313,8 @@ function updateModalImage() {
     });
 
 
-    console.log("《不公正的哈尼》感应式背景加载完成");
-}, 150);
-});
+console.log("首页交互逻辑已优先启动");
+}
 
 </script>
 
